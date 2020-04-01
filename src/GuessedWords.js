@@ -9,15 +9,14 @@ const GuessedWords = (props) => {
             <span data-test="guess-instructions">Try to gues a secret word</span>
         ) : (
             <>
-            <h3>Guessed Words</h3>
-            <table data-test="guessed-words">
+            <h3 className="guess-header">Guessed Words</h3>
+            <table data-test="guessed-words" className="guesses-table">
                 <thead>
-                    <tr><td>Guess</td></tr>
-                    <tr><td>Matching letters</td></tr>
+                    <tr><th>Guess</th><th>Matching letters</th></tr>
                 </thead>
                 <tbody>
                 {props.guessedWords.map(({guessedWord, letterMatchCount},index) => (
-                    <tr key={index} data-test="guessed-word">
+                    <tr key={index} data-test="guessed-word" className="guessed-word">
                         <td>{guessedWord}</td>
                 <td>{letterMatchCount}</td>
                         </tr>

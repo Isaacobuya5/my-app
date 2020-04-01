@@ -8,7 +8,23 @@ const GuessedWords = (props) => {
         (
             <span data-test="guess-instructions">Try to gues a secret word</span>
         ) : (
-            <div> GuessedWords</div>
+            <>
+            <h3>Guessed Words</h3>
+            <table data-test="guessed-words">
+                <thead>
+                    <tr><td>Guess</td></tr>
+                    <tr><td>Matching letters</td></tr>
+                </thead>
+                <tbody>
+                {props.guessedWords.map(({guessedWord, letterMatchCount},index) => (
+                    <tr key={index} data-test="guessed-word">
+                        <td>{guessedWord}</td>
+                <td>{letterMatchCount}</td>
+                        </tr>
+                ))  }
+                </tbody>
+                 </table>
+                 </>
         )
         }
         </div>

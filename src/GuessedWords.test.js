@@ -42,7 +42,31 @@ it("renders instructions to guess a word", () => {
 });
 
 describe("if there are words guesed", () => {
+  let wrapper;
+  let guessedWords = [
+    {guessedWord: 'train', letterMatchCount: 3},
+    {guessedWord: 'agile', letterMatchCount: 1},
+    {guessedWord: 'party', letterMatchCount: 5}
+    ]
 
+    beforeEach(() => {
+    wrapper = setup({ guessedWords });
+    })
+
+it("Should render without error" , () => {
+    const component = findByTestAttr(wrapper, "component-guessed-word");
+    expect(component.length).toBe(1);
+});
+
+it("Should render guessed words section" , () => {
+const guessedWordsNode = findByTestAttr(wrapper, "guessed-words");
+expect(guessedWordsNode.length).toBe(1);
+});
+
+it("Should display the correct number of guessed words" , () => {
+    const guessedWordsNodes = findByTestAttr(wrapper, "guessed-word");
+    expect(guessedWordsNodes.length).toBe(guessedWords.length);
+});
 });
 
 

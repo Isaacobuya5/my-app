@@ -3,6 +3,7 @@ import { shallow, ShallowWrapper } from "enzyme";
 
 import Input from "./Input";
 import { findByTestAttr, storeFactory } from "../test/testUtils";
+import { guessWord } from "./actions";
 
 //write set up function to connect to redux store
 
@@ -69,4 +70,20 @@ describe("render Input Component", () => {
   });
 });
 
-describe("update success state", () => {});
+// Testing Redux props
+describe("redux props", () => {
+it('should have success piece of state as prop', () => {
+  const success = true;
+  const wrapper = setup({ success });
+  // we will now use wrapper.instance() to get the React component and then .props on that to get the props
+  const successProp = wrapper.instance().props.success;
+  expect(successProp).toBe(success);
+});
+
+// testing to see that the guessWord action creator is there as a prop
+it('should check that guessWord action creator is a function prop', () => {
+const wrapper = setup();
+const guessWordProp = wrapper.instance().props.guessWord;
+expect(guessWordProp).toBeInstanceOf(Function);
+})
+});

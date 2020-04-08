@@ -1,7 +1,7 @@
 import React from "react";
 import { shallow, ShallowWrapper } from "enzyme";
 
-import Input from "./Input";
+import Input, {UnConnectedInput} from "./Input";
 import { findByTestAttr, storeFactory } from "../test/testUtils";
 import { guessWord } from "./actions";
 
@@ -87,3 +87,27 @@ const guessWordProp = wrapper.instance().props.guessWord;
 expect(guessWordProp).toBeInstanceOf(Function);
 })
 });
+
+// testing guessWord call on submit
+it("should call `guessWord` action creator when button submit is called", () => {
+  // create mock for guessWord
+  const guessWordMock = jest.fn();
+
+  const props = {
+    success: false,
+    guessWord: guessWordMock
+  }
+
+  // wrapper for the unconnected input component
+  const wrapper = shallow(<UnConnectedInput {...props} />);
+
+  // find the submit button
+  const submitButton = findByTestAttr(wrapper,"submit-button");
+
+  // simulate click on submit
+  submitButton.simulate('click');
+
+  // check to see if guessWord action has been called
+  const guessWordCallCount = guessWordMock.mock.calls.length;
+  expect(guessWordCallCount).toBe(1);
+})

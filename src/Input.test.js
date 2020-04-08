@@ -88,26 +88,62 @@ expect(guessWordProp).toBeInstanceOf(Function);
 })
 });
 
-// testing guessWord call on submit
-it("should call `guessWord` action creator when button submit is called", () => {
-  // create mock for guessWord
-  const guessWordMock = jest.fn();
 
+// // testing guessWord call on submit
+// it("should call `guessWord` action creator when button submit is called", () => {
+//   // create mock for guessWord
+//   const guessWordMock = jest.fn();
+
+//   const props = {
+//     success: false,
+//     guessWord: guessWordMock
+//   }
+
+//   // wrapper for the unconnected input component
+//   const wrapper = shallow(<UnConnectedInput {...props} />);
+
+//   // find the submit button
+//   const submitButton = findByTestAttr(wrapper,"submit-button");
+
+//   // simulate click on submit
+//   submitButton.simulate('click');
+
+//   // check to see if guessWord action has been called
+//   const guessWordCallCount = guessWordMock.mock.calls.length;
+//   expect(guessWordCallCount).toBe(1);
+// })
+
+describe("`guessWord` action creator call", () => {
+let guessWordMock;
+let wrapper;
+const guessedWord = 'train';
+
+beforeEach(() => {
+  // create mock for guessWord
+  guessWordMock = jest.fn();
   const props = {
     success: false,
     guessWord: guessWordMock
   }
-
   // wrapper for the unconnected input component
-  const wrapper = shallow(<UnConnectedInput {...props} />);
+  wrapper = shallow(<UnConnectedInput {...props} />);
+   // find the submit button
+   const submitButton = findByTestAttr(wrapper,"submit-button");
+   // add value to the input box
+   wrapper.instance().inputBox.current = { value: guessedWord}
+   // simulate click on submit
+   submitButton.simulate('click', { preventDefault() {} });
+});
 
-  // find the submit button
-  const submitButton = findByTestAttr(wrapper,"submit-button");
+// testing guessWord call on submit
+it("should call `guessWord` action creator when button submit is called", () => {
+    // check to see if guessWord action has been called
+    const guessWordCallCount = guessWordMock.mock.calls.length;
+    expect(guessWordCallCount).toBe(1);
+});
 
-  // simulate click on submit
-  submitButton.simulate('click');
-
-  // check to see if guessWord action has been called
-  const guessWordCallCount = guessWordMock.mock.calls.length;
-  expect(guessWordCallCount).toBe(1);
+it("calls `guessWord` with input value as arguement", () => {
+  const guessWordArg = guessWordMock.mock.calls[0][0];
+  expect(guessWordArg).toBe(guessedWord);
 })
+});

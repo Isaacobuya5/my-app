@@ -39,7 +39,7 @@ export const guessWord = (guessWord) => {
 
 export const getSecretWord = () => {
     return (dispatch) => {
-        return axios.get('http:/localhost:3030')
+        return axios.get('http://localhost:3030/')
         .then(response => {
             dispatch({
                 type: actionTypes.SET_SECRET_WORD,

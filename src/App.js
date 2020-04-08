@@ -23,6 +23,7 @@ export class UnconnectedApp extends React.Component {
     
     <div className="App">
       <h1 className="header-title">Lotto Jotto App</h1>
+      <div>The secret word is {this.props.secretWord}</div>
      <Congrats success={this.props.success} /> {/** initially = true */}
      <Input />
      <GuessedWords guessedWords={this.props.guessedWords} /> {/** initially = [

@@ -145,5 +145,9 @@ it("should call `guessWord` action creator when button submit is called", () => 
 it("calls `guessWord` with input value as arguement", () => {
   const guessWordArg = guessWordMock.mock.calls[0][0];
   expect(guessWordArg).toBe(guessedWord);
+});
+// test for clear input box after submit
+it("clears input box after submit", () => {
+  expect(wrapper.instance().inputBox.current.value).toBe('');
 })
 });

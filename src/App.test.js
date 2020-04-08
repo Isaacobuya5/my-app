@@ -2,7 +2,7 @@ import React from 'react';
 import { shallow, ShallowWrapper } from "enzyme";
 
 import { storeFactory } from '../test/testUtils';
-import App from './App';
+import App, {UnconnectedApp} from './App';
 
 /**
  * function setup
@@ -47,4 +47,29 @@ import App from './App';
      })
 
  });
+
+ it("`getSecretWord` runs on App mount", () => {
+     // create mock function
+     // jest will watch and see whenever this mock is called
+     const getSecretWordMock = jest.fn();
+
+     // we need to pass all props for the purpose of prop-types, we don't want to see warnings
+     const props = {
+         getSecretWord: getSecretWordMock,
+         success: false,
+         guessedWords: []
+     }
+     // setup app component with the getSecretWordMock as a prop
+     // we don't use our setup function because it uses connected component
+     const wrapper = shallow(<UnconnectedApp {...props}/>);
+
+     // run lifecycle method
+     // remember - wrapper.instance() gives us the actual react component thus we can run componentDidMount
+     wrapper.instance().componentDidMount();
+
+     // check to see if mock ran -> check how many times mock ran
+     const getSecretWordMockCallCount = getSecretWordMock.mock.calls.length;
+     expect(getSecretWordMockCallCount).toBe(1);
+
+ })
 
